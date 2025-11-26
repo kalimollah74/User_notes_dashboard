@@ -8,12 +8,9 @@ const profileRoutes = require("./routes/profileRoutes");
 const noteRoutes = require("./routes/noteRoutes");
 
 const app = express();
-
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Fail fast when required environment variables are missing
 const requiredEnvs = ["MONGO_URI", "JWT_SECRET", "JWT_EXPIRES_IN"];
 const missingEnvs = requiredEnvs.filter((k) => !process.env[k]);
 if (missingEnvs.length) {
@@ -22,12 +19,10 @@ if (missingEnvs.length) {
     process.exit(1);
 }
 
-// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/notes", noteRoutes);
 
-// Health check
 app.get("/", (req, res) => {
     res.send("API is running");
 });
